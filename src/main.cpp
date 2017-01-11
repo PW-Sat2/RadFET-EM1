@@ -4,8 +4,6 @@
 
 #include "Serial.h"
 #include "SPI.h"
-#include "SPIHard.h"
-#include "SPISoft.h"
 
 #include "AD7714.h"
 
@@ -58,23 +56,23 @@ int main() {
 	while(1) {
 		for(int i = 1; i < 4; ++i) {
 			mux_enable_ch(i);
-			_delay_ms(2000);
+			_delay_ms(100);
 
 			uint32_t x = adc_read();
 
 			mux.disable();
 			hal::Serial0.printf("0x%08lx ", x);
-			_delay_ms(100);
+			_delay_ms(10);
 		}
 		
 		mux_enable_ch(mux_tmp);
 		temp_en.set();
-		_delay_ms(2000);
+		_delay_ms(100);
 		uint32_t x = adc_read();
 
 		temp_en.reset();
 		hal::Serial0.printf("0x%08lx\r\n", x);
-		_delay_ms(100);
+		_delay_ms(10);
 	}
 	while(1) {}
 }
